@@ -6,7 +6,7 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 2500,
     "estrellas": 5,
-    "imagen": "/src/assets/productosrolo4k.png"
+    "imagen": "/productosrolo4k.png"
   },
   {
     "id": "2",
@@ -15,7 +15,7 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 4800,
     "estrellas": 5,
-    "imagen": "/src/assets/productosmolido10k.png"
+    "imagen": "/productosmolido10k.png"
   },
   {
     "id": "3",
@@ -24,7 +24,7 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 7000,
     "estrellas": 4,
-    "imagen": "/src/assets/productosbarra-15k.png"
+    "imagen": "/productosbarra-15k.png"
   },
   {
     "id": "4",
@@ -33,7 +33,7 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 5500,
     "estrellas": 5,
-    "imagen": "/src/assets/productosrolo10k.png"
+    "imagen": "/productosrolo10k.png"
   },
   {
     "id": "5",
@@ -42,7 +42,7 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 3800,
     "estrellas": 5,
-    "imagen": "/src/assets/productoscubogrande.png"
+    "imagen": "/productoscubogrande.png"
   },
   {
     "id": "6",
@@ -51,6 +51,6 @@
     "pesoUnidad": "Kilos",
     "precioNumerico": 8500,
     "estrellas": 4,
-    "imagen": "/src/assets/productosescamas20k.png"
+    "imagen": "/productosescamas20k.png"
   }
 ]

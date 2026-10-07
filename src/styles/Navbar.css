@@ -61,7 +61,7 @@
   color: #38bdf8;
 }
 
-/* 2. Barra Principal Glassmorphism */
+/* 2. Barra Principal  */
 .navbar-main {
   background: rgba(11, 19, 30, 0.88);
   backdrop-filter: blur(14px);
@@ -139,7 +139,7 @@
   box-shadow: 0 2px 10px rgba(0, 168, 232, 0.25);
 }
 
-/* Acciones del Nav (Carrito + Hamburguesa) */
+/* Acciones del nav, carrito + menu Hamburguesa */
 .nav-actions {
   display: flex;
   align-items: center;
@@ -182,7 +182,7 @@
   justify-content: center;
 }
 
-/* Botón Hamburguesa Mobile */
+/* Botón Hamburguesa telefono */
 .menu-toggle-btn {
   display: none;
   background: transparent;

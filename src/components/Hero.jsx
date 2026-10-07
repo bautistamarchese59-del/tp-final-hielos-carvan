@@ -34,7 +34,7 @@ export default function Hero() {
             </Link>
           </div>
 
-          {/* Datos concretos del servicio */}
+          {/* Datos del servicio */}
           <div className="hero-highlights">
             <div className="highlight-item">
               <span className="highlight-icon">🧊</span>

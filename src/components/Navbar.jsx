@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { NavLink, Link } from 'react-router-dom';
-import logoImg from '../assets/carvan.png';
 import '../styles/Navbar.css';
 
 export default function Navbar({ carrito = [] }) {
@@ -9,7 +8,7 @@ export default function Navbar({ carrito = [] }) {
 
   return (
     <header className="navbar-header">
-      {/* Topbar Informativa */}
+      {/* Topbar de info */}
       <div className="navbar-topbar">
         <div className="container topbar-container">
           <div className="topbar-info">
@@ -35,11 +34,11 @@ export default function Navbar({ carrito = [] }) {
         </div>
       </div>
 
-      {/* Nav Principal */}
+      {/* nav principal */}
       <nav className="navbar-main">
         <div className="container nav-container">
           <Link to="/" className="brand-logo-link" onClick={() => setMenuAbierto(false)}>
-            <img src={logoImg} alt="Hielos Carvan" className="brand-logo-img" />
+            <img src="/carvan.png" alt="Hielos Carvan" className="brand-logo-img" />
             <span className="brand-name">
               HIELOS <span className="brand-highlight">CARVAN</span>
             </span>

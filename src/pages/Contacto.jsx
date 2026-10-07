@@ -28,7 +28,7 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
 
     const telefonoWhatsapp = '541167391181';
 
-    // Payload adaptado para MockAPI
+    // payload adaptado para la api
     const pedidoPayload = {
       clienteNombre: nombre,
       clienteEmail: email || 'No especificado',

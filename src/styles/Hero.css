@@ -30,7 +30,7 @@
   margin: 0 auto;
 }
 
-/* Tarjeta Principal Glassmorphism */
+/* Tarjeta Principal  */
 .hero-glass-card {
   background: rgba(15, 26, 40, 0.65);
   backdrop-filter: blur(16px);
@@ -71,7 +71,7 @@
   box-shadow: 0 0 8px #38bdf8;
 }
 
-/* Título e Impacto Visual */
+/* Título  */
 .hero-title {
   color: #ffffff;
   font-size: clamp(2.2rem, 4.8vw, 3.4rem);

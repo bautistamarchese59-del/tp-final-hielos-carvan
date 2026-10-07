@@ -8,7 +8,7 @@ const GALERIA_DATA = [
     categoria: 'rolito',
     categoriaTag: 'ROLITO',
     descripcion: 'Hielo purificado en bolsas individuales de 4kg y 10kg.',
-    imagen: '/src/assets/productosrolo10k.png'
+    imagen: '/productosrolo10k.png'
   },
   {
     id: 2,
@@ -16,7 +16,7 @@ const GALERIA_DATA = [
     categoria: 'rolito',
     categoriaTag: 'ROLITO',
     descripcion: 'Cubos macizos de fusión lenta ideales para tragos y eventos.',
-    imagen: '/src/assets/productoscubogrande.png'
+    imagen: '/productoscubogrande.png'
   },
   {
     id: 3,
@@ -24,7 +24,7 @@ const GALERIA_DATA = [
     categoria: 'escamas',
     categoriaTag: 'ESCAMAS',
     descripcion: 'Enfriamiento rápido de contacto para conservación y barras.',
-    imagen: '/src/assets/productosescamas20k.png'
+    imagen: '/productosescamas20k.png'
   },
   {
     id: 4,
@@ -32,7 +32,7 @@ const GALERIA_DATA = [
     categoria: 'escamas',
     categoriaTag: 'MOLIDO',
     descripcion: 'Textura perfecta para coctelería frappe y exhibición.',
-    imagen: '/src/assets/productosmolido10k.png'
+    imagen: '/productosmolido10k.png'
   },
   {
     id: 5,
@@ -40,7 +40,7 @@ const GALERIA_DATA = [
     categoria: 'barras',
     categoriaTag: 'BARRAS',
     descripcion: 'Bloques de 15kg para conservación térmica prolongada.',
-    imagen: '/src/assets/productosbarra-15k.png'
+    imagen: '/productosbarra-15k.png'
   },
   {
     id: 6,
@@ -48,7 +48,7 @@ const GALERIA_DATA = [
     categoria: 'rolito',
     categoriaTag: 'ROLITO',
     descripcion: 'Proceso de fabricación con agua ozonizada e iones de plata.',
-    imagen: '/src/assets/productosrolo4k.png'
+    imagen: '/productosrolo4k.png'
   }
 ];
 
@@ -60,7 +60,6 @@ export default function Galeria() {
     ? GALERIA_DATA
     : GALERIA_DATA.filter((item) => item.categoria === tabActiva);
 
-  //  título descriptivo del banner según la pestaña
   const getBannerInfo = () => {
     switch (tabActiva) {
       case 'rolito':
@@ -120,7 +119,7 @@ export default function Galeria() {
           </button>
         </div>
 
-        {/* Banner Cartel  */}
+        {/* Banner Cartel */}
         <div className="galeria-banner">
           <h3>{bannerInfo.titulo}</h3>
           <p>{bannerInfo.subtitulo}</p>
@@ -151,7 +150,7 @@ export default function Galeria() {
           ))}
         </div>
 
-        
+        {/* Modal / Lightbox */}
         {imagenModal && (
           <div className="lightbox-overlay" onClick={() => setImagenModal(null)}>
             <div className="lightbox-content" onClick={(e) => e.stopPropagation()}>
