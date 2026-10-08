@@ -54,22 +54,26 @@ src/
 
 ## 💻 Instalación y Configuración Local
 
-Para ejecutar este proyecto localmente en tu máquina, seguí estos pasos:
+clonar el repositorio
 
-1.```Clonar el repositorio```
-   ```bash
-   git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
+```bash
+git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
+```
 
 Navegar al directorio del proyecto:
-
+```bash
 cd tp-final-hielos-carvan
-
+```
 Instalar dependencias:
-
+```bash
 npm install
+```
 
 Iniciar el servidor de desarrollo:
-
+```bash
 npm run dev
+```
 
-Abrí tu navegador y visitá http://localhost:5173 para ver la aplicación.
+Abrir en el navegador: 
+Visitá http://localhost:5173 para ver la aplicación.
+
