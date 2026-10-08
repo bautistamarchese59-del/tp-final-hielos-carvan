@@ -1,53 +1,75 @@
-# Hielos Carvan - Aplicación Web en React
+#  Hielos Carvan - Trabajo Práctico Final (React)
 
-Este proyecto es el Trabajo Práctico Final  para la Diplomatura  de desarrollo front-end de la **Universidad Tecnológica Nacional
+Proyecto final desarrollado para la Diplomatura en Programación Web Full Stack
 
-Consiste en una aplicación desarrollada con **React** y **Vite** para la gestión de pedidos en línea y catálogo de productos de una fábrica de hielo, con integración a **MockAPI** y envío directo de órdenes por **WhatsApp**
-
----
-
-## 🛠️ Tecnologías utilizadas
-
-- **React** (Componentes basados en funciones, `useState`, `useEffect`)
-- **React Router DOM v6** (Navegación y estructura de rutas mediante `Layout` y `Outlet`)
-- **Vite** (Build tool y servidor de desarrollo rápido)
-- **CSS3 / Flexbox & Grid** (Diseño adaptable y responsivo)
-- **MockAPI** (Persistencia y registro de pedidos)
+## 🚀 Demo en Vivo
+- [Sitio Web Desplegado en Vercel](https://tp-final-hielos-carvan.vercel.app)
 
 ---
 
-## 📁 Estructura del proyecto
+## 📋 Descripción del Proyecto
+**Hielos Carvan** es una aplicación web e-commerce orientada a la venta y distribución de hielo a domicilio y comercios. Permite explorar productos por categorías, ver detalles y precios, gestionar un carrito de compras dinámico y enviar pedidos directamente por WhatsApp junto con el registro en una base de datos (MockAPI).
+
+---
+
+## ✨ Funcionalidades Principales
+- **Catálogo de Productos y Filtros:** Navegación dinámica por categorías (Rolo, Gourmet, Barras, Molido, Escamas).
+- **Galería Interactiva:** Modal/Lightbox para previsualizar imágenes en detalle.
+- **Carrito de Compras:**
+  - Agregar/quitar unidades.
+  - Eliminar productos específicos.
+  - Vaciar pedido completo.
+  - Barra flotante con resumen de total acumulado.
+- **Checkout y Contacto:**
+  - Formulario de datos de entrega.
+  - Integración con **WhatsApp API** para envío automático del resumen del pedido.
+  - Registro de pedidos mediante llamadas asincrónicas `fetch` (POST) a **MockAPI**.
+- **Diseño Responsive:** Layout adaptado a dispositivos móviles y desktop.
+
+---
+
+## 🛠️ Tecnologías Utilizadas
+- **React 18** + **Vite**
+- **React Router DOM v6** (Navegación SPA)
+- **CSS3 / Flexbox / Grid**
+- **MockAPI** (Persistencia y base de datos simulada)
+- **Vercel** (Despliegue y hosting continuo)
+
+---
+
+## 📁 Estructura del Proyecto
 
 ```text
 src/
-├── assets/          # Imágenes y recursos estáticos
-├── components/      # Componentes reutilizables (Navbar, Footer, Layout, Card, etc.)
-├── pages/           # Páginas de la app (Home, Productos, Galería, Contacto)
-├── styles/          # Hojas de estilo CSS organizadas por componente/página
-├── App.jsx          # Configuración de rutas principales
-└── main.jsx         # Punto de entrada de la aplicación en React
+ ├── assets/        # Recursos gráficos
+ ├── components/    # Componentes reutilizables (Navbar, Footer, Layout, etc.)
+ ├── pages/         # Páginas principales (Home, Productos, Galería, Contacto)
+ ├── styles/        # Hojas de estilo CSS organizadas por componente/página
+ ├── App.jsx        # Configuración de rutas principales
+ └── main.jsx       # Punto de entrada de la aplicación en React
 
 
-Pasos para ejecutar el proyecto en local
-Clonar el repositorio:
 
-1- clonar el repositorio:
- git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
+---
 
-2- entrar a la carpeta del proyecto:
+## 💻 Instalación y Configuración Local
+
+Para ejecutar este proyecto localmente en tu máquina, seguí estos pasos:
+
+1. **Clonar el repositorio:**
+   ```bash
+   git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
+
+Navegar al directorio del proyecto:
+
 cd tp-final-hielos-carvan
 
-3- instalar dependencias si no las tienes instaladas:
+Instalar dependencias:
+
 npm install
 
-4- iniciar el servidor:
-npm run dev 
+Iniciar el servidor de desarrollo:
 
-5-Abrir en el navegador:
-haz clic o abre en tu navegador la URL local que indica la consola
+npm run dev
 
-Autor
-Desarrollador: Bautista Marchese (bautistamarchese59)
-
-
-
+Abrí tu navegador y visitá http://localhost:5173 para ver la aplicación.
