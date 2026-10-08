@@ -56,7 +56,7 @@ src/
 
 Para ejecutar este proyecto localmente en tu máquina, seguí estos pasos:
 
-1. **Clonar el repositorio:**
+1.```Clonar el repositorio```
    ```bash
    git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
 
