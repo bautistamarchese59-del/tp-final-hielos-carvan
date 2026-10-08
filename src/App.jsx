@@ -24,6 +24,7 @@ export default function App() {
     });
   };
 
+  // Disminuye la cantidad de a 1 (para los botones - y +)
   const quitarDelCarrito = (id) => {
     setCarrito((prev) => {
       const existe = prev.find((item) => String(item.id) === String(id));
@@ -38,7 +39,12 @@ export default function App() {
     });
   };
 
-  // 1. Declarar la función para vaciar el carrito
+  // Elimina completamente el producto del carrito (para el botón X)
+  const eliminarDelCarrito = (id) => {
+    setCarrito((prev) => prev.filter((item) => String(item.id) !== String(id)));
+  };
+
+  // Vacía todo el carrito
   const vaciarCarrito = () => {
     setCarrito([]);
   };
@@ -64,13 +70,13 @@ export default function App() {
         
         <Route path="galeria" element={<Galeria />} />
         
-        {/* 2. Pasamos vaciarCarrito a Contacto */}
+        {/* Pasamos eliminarDelCarrito y vaciarCarrito a Contacto */}
         <Route 
           path="contacto" 
           element={
             <Contacto 
               carrito={carrito} 
-              quitarDelCarrito={quitarDelCarrito}
+              eliminarDelCarrito={eliminarDelCarrito}
               vaciarCarrito={vaciarCarrito} 
             />
           } 

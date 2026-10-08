@@ -156,7 +156,7 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                           </span>
                           <button
                             type="button"
-                            onClick={() => eliminarDelCarrito(item.id)}
+                            onClick={() => eliminarDelCarrito && eliminarDelCarrito(item.id)}
                             className="btn-eliminar-item"
                             title="Eliminar producto"
                           >
