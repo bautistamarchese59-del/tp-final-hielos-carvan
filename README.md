@@ -1,6 +1,6 @@
 <h1>🧊 Hielos Carvan - Trabajo Práctico Final (React)</h1>
 
-<p>Proyecto final desarrollado para la <strong>Diplomatura en Programación Web Full Stack (UTN FRBA)</strong>.</p>
+<p>Proyecto final desarrollado para la <strong>Diplomatura en Programación Web Full Stack </strong>.</p>
 
 <hr>
 
