@@ -52,11 +52,10 @@ src/
 
 ---
 
-## 💻 Instalación y Configuración Local
+# Instalación y Configuración Local
 
-clonar el repositorio
-
-```bash
+```
+bash
 git clone https://github.com/bautistamarchese59-del/tp-final-hielos-carvan.git
 ```
 
