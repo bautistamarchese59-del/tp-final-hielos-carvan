@@ -1,0 +1,32 @@
+[
+  {
+    "id": "1",
+    "nombre": "Hielo en Cubos X 3 Kilos",
+    "categoria": "cubos",
+    "pesoValor": 3,
+    "pesoUnidad": "Kilos",
+    "precioNumerico": 2500,
+    "estrellas": 5,
+    "imagen": "/hielo 3kg.png"
+  },
+  {
+    "id": "2",
+    "nombre": "Hielo en Cubos X 10 Kilos",
+    "categoria": "cubos",
+    "pesoValor": 10,
+    "pesoUnidad": "Kilos",
+    "precioNumerico": 5500,
+    "estrellas": 5,
+    "imagen": "/hielo-10kg"
+  },
+  {
+    "id": "3",
+    "nombre": "Hielo en Cubos X 15 Kilos",
+    "categoria": "cubos",
+    "pesoValor": 15,
+    "pesoUnidad": "Kilos",
+    "precioNumerico": 7500,
+    "estrellas": 5,
+    "imagen": "/productosbarra-15k.png"
+  }
+]
