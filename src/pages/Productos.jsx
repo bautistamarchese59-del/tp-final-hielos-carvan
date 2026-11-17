@@ -1,197 +1,130 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Productos.css';
 
-const LISTA_PRODUCTOS = [
-  {
-    id: "1",
-    nombre: "Hielo Rolo X 4 Kilos",
-    categoria: "rolo",
-    pesoValor: 4,
-    pesoUnidad: "Kilos",
-    precioNumerico: 2500,
-    estrellas: 5,
-    imagen: "/productosrolo4k.png"
-  },
-  {
-    id: "2",
-    nombre: "Hielo Molido X 10 Kilos",
-    categoria: "molido",
-    pesoValor: 10,
-    pesoUnidad: "Kilos",
-    precioNumerico: 4800,
-    estrellas: 5,
-    imagen: "/productosmolido10k.png"
-  },
-  {
-    id: "3",
-    nombre: "Hielo en Barra X 15 Kilos",
-    categoria: "barra",
-    pesoValor: 15,
-    pesoUnidad: "Kilos",
-    precioNumerico: 7000,
-    estrellas: 4,
-    imagen: "/productosbarra-15k.png"
-  },
-  {
-    id: "4",
-    nombre: "Hielo Rolo X 10 Kilos",
-    categoria: "rolo",
-    pesoValor: 10,
-    pesoUnidad: "Kilos",
-    precioNumerico: 5500,
-    estrellas: 5,
-    imagen: "/productosrolo10k.png"
-  },
-  {
-    id: "5",
-    nombre: "Hielo Gourmet Cubo Grande X 5 Kilos",
-    categoria: "gourmet",
-    pesoValor: 5,
-    pesoUnidad: "Kilos",
-    precioNumerico: 3800,
-    estrellas: 5,
-    imagen: "/productoscubogrande.png"
-  },
-  {
-    id: "6",
-    nombre: "Hielo en Escamas X 20 Kilos",
-    categoria: "escamas",
-    pesoValor: 20,
-    pesoUnidad: "Kilos",
-    precioNumerico: 8500,
-    estrellas: 4,
-    imagen: "/productosescamas20k.png"
-  }
-];
-
-export default function Productos({ carrito = [], agregarAlCarrito, quitarDelCarrito }) {
+export default function Productos({ carrito, agregarAlCarrito, quitarDelCarrito }) {
   const navigate = useNavigate();
-  const [categoriaActiva, setCategoriaActiva] = useState('todos');
 
-  const formatMoneda = (val) => {
-    return new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS',
-      minimumFractionDigits: 0
-    }).format(val);
+  // Definición de los productos con su peso en kg para la cuenta
+  const listaProductos = [
+    {
+      id: '3kg',
+      nombre: 'HIELO EN CUBOS X 3 KILOS',
+      pesoKg: 3,
+      descripcion: 'Ideal para eventos hogareños, conservadoras y reuniones pequeñas.',
+      imagen: '/hielo 3kg.png',
+      badge: null
+    },
+    {
+      id: '10kg',
+      nombre: 'HIELO EN CUBOS X 10 KILOS',
+      pesoKg: 10,
+      descripcion: 'Formato rendidor pensado para comercios, kioscos y gastronómicos.',
+      imagen: '/hielo 10kg.png',
+      badge: '★ MÁS ELEGIDA'
+    }
+  ];
+
+  // Buscar la cantidad actual de cada producto en el carrito
+  const getCantidad = (id) => {
+    const item = carrito.find((prod) => String(prod.id) === String(id));
+    return item ? item.cantidad : 0;
   };
 
-  const totalUnidades = carrito.reduce((acc, item) => acc + item.cantidad, 0);
-  const totalDinero = carrito.reduce((acc, item) => acc + (item.precioNumerico * item.cantidad), 0);
-
-  const handleIrAlContacto = () => {
-    navigate('/contacto');
-  };
-
-  const productosFiltrados = categoriaActiva === 'todos'
-    ? LISTA_PRODUCTOS
-    : LISTA_PRODUCTOS.filter((p) => p.categoria === categoriaActiva);
+  // Cálculo total de kilos y bolsas en el carrito
+  const totalBolsas = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  
+  const totalKilos = carrito.reduce((acc, item) => {
+    const productoBase = listaProductos.find((p) => String(p.id) === String(item.id));
+    const peso = productoBase ? productoBase.pesoKg : 0;
+    return acc + (peso * item.cantidad);
+  }, 0);
 
   return (
     <main className="productos-page">
       <div className="container">
-
-        {/* Banner Superior */}
+        
+        {/* Encabezado */}
         <section className="productos-hero">
-          <span className="productos-hero__badge">Venta de hielo a domicilio y comercios</span>
-          <h1>MÁXIMA CALIDAD Y PUREZA GARANTIZADA</h1>
+          <span className="productos-hero__badge">⚡ VENTA MINORISTA Y MAYORISTA</span>
+          <h1>
+            NOS ADAPTAMOS A TU <span className="title-cyan">PRESUPUESTO</span>
+          </h1>
           <p>
-            La pureza de nuestros hielos está dada por un tratamiento de
-            <strong> Agua Ozonizada y con Iones de Plata</strong>.
+            Armamos presupuestos a medida según la cantidad de bolsas que necesites.<br />
+            ¡Consultanos por descuentos especiales para eventos y comercios!
           </p>
-
-          {/* Filtros por Categoría */}
-          <div className="filtros-container">
-            <button
-              className={`filtro-btn ${categoriaActiva === 'todos' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('todos')}
-            >
-              Todos
-            </button>
-            <button
-              className={`filtro-btn ${categoriaActiva === 'rolo' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('rolo')}
-            >
-              Rolo
-            </button>
-            <button
-              className={`filtro-btn ${categoriaActiva === 'gourmet' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('gourmet')}
-            >
-              Gourmet
-            </button>
-            <button
-              className={`filtro-btn ${categoriaActiva === 'barra' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('barra')}
-            >
-              Barras
-            </button>
-            <button
-              className={`filtro-btn ${categoriaActiva === 'molido' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('molido')}
-            >
-              Molido
-            </button>
-            <button
-              className={`filtro-btn ${categoriaActiva === 'escamas' ? 'activo' : ''}`}
-              onClick={() => setCategoriaActiva('escamas')}
-            >
-              Escamas
-            </button>
-          </div>
         </section>
 
         {/* Grilla de Productos */}
-        <section className="productos-grid">
-          {productosFiltrados.map((prod) => {
-            const enCarrito = carrito.find((item) => String(item.id) === String(prod.id));
-            const cantidad = enCarrito ? enCarrito.cantidad : 0;
+        <div className="productos-grid">
+          {listaProductos.map((prod) => {
+            const cantidad = getCantidad(prod.id);
 
             return (
               <div key={prod.id} className="producto-card">
+                
                 <div className="card-img-wrapper">
+                  {prod.badge && <span className="card-badge-top">{prod.badge}</span>}
+                  <span className="weight-badge">{prod.pesoKg} Kilos</span>
                   <img src={prod.imagen} alt={prod.nombre} />
-                  <div className="weight-badge">
-                    <span className="weight-badge__val">{prod.pesoValor}</span>
-                    <span className="weight-badge__unit">{prod.pesoUnidad}</span>
-                  </div>
                 </div>
 
-                <div className="card-content">
-                  <h3 className="card-title">{prod.nombre}</h3>
-                  <div className="card-stars">{'★'.repeat(prod.estrellas || 5)}</div>
-                  <div className="card-price">{formatMoneda(prod.precioNumerico)}</div>
+                <div className="card-body">
+                  <h3>{prod.nombre}</h3>
+                  <p>{prod.descripcion}</p>
 
+                  <div className="mayorista-tag">
+                    <span>🏷️</span> Precio mayorista 4 bolsas o más
+                  </div>
+
+                  {/* Controles de Cantidad */}
                   {cantidad === 0 ? (
-                    <button
-                      onClick={() => agregarAlCarrito(prod)}
-                      className="btn-add-cart"
+                    <button 
+                      onClick={() => agregarAlCarrito(prod)} 
+                      className="btn-cyan-full"
                     >
-                      AÑADIR AL CARRITO
+                      AGREGAR A MI PEDIDO
                     </button>
                   ) : (
-                    <div className="cart-controls">
-                      <button onClick={() => quitarDelCarrito(prod.id)}>-</button>
-                      <span>{cantidad} en carrito</span>
-                      <button onClick={() => agregarAlCarrito(prod)}>+</button>
+                    <div className="counter-controls">
+                      <button 
+                        onClick={() => quitarDelCarrito(prod.id)} 
+                        className="counter-btn"
+                      >
+                        -
+                      </button>
+                      <span className="counter-text">{cantidad} {cantidad === 1 ? 'bolsa' : 'bolsas'} en pedido</span>
+                      <button 
+                        onClick={() => agregarAlCarrito(prod)} 
+                        className="counter-btn"
+                      >
+                        +
+                      </button>
                     </div>
                   )}
+
                 </div>
               </div>
             );
           })}
-        </section>
+        </div>
 
-        {/* Barra Flotante Inferior de Pedido */}
-        {totalUnidades > 0 && (
-          <div className="floating-cart-bar">
-            <div className="cart-summary-info">
-              <div>🛒 <strong>{totalUnidades}</strong> {totalUnidades === 1 ? 'producto' : 'productos'}</div>
-              <div className="cart-total-price">Total: <span>{formatMoneda(totalDinero)}</span></div>
+        {/* Barra de Recuento Flotante de Kilos y Bolsas */}
+        {totalBolsas > 0 && (
+          <div className="pedido-summary-bar">
+            <div className="summary-info">
+              <span className="summary-icon">🧊</span>
+              <div>
+                <strong>Pedido: {totalBolsas} {totalBolsas === 1 ? 'bolsa seleccionada' : 'bolsas seleccionadas'} ({totalKilos} kg en total)</strong>
+                <p>Solicitá presupuesto directo por esta cantidad</p>
+              </div>
             </div>
-            <button onClick={handleIrAlContacto} className="btn-ir-formulario">
-              FINALIZAR PEDIDO →
+            <button 
+              onClick={() => navigate('/contacto')} 
+              className="btn-summary-action"
+            >
+              SOLICITAR PRESUPUESTO →
             </button>
           </div>
         )}

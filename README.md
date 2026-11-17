@@ -19,6 +19,7 @@ Consiste en una aplicación desarrollada con **React** y **Vite** para la gesti�
 ## 📁 Estructura del proyecto
 
 ```text
+├──public            # imagenes del proyecto 
 src/
 ├── assets/          # Imágenes y recursos estáticos
 ├── components/      # Componentes reutilizables (Navbar, Footer, Layout, Card, etc.)

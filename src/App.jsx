@@ -5,7 +5,9 @@ import Layout from './components/Layout';
 import Home from './pages/Home';
 import Productos from './pages/Productos';
 import Galeria from './pages/Galeria';
+import Calculadora from './pages/Calculadora'; // 👈 1. Importamos la Calculadora
 import Contacto from './pages/Contacto';
+import WhatsAppButton from './components/WhatsAppButton';
 
 export default function App() {
   const [carrito, setCarrito] = useState([]);
@@ -24,7 +26,6 @@ export default function App() {
     });
   };
 
-  // Disminuye la cantidad de a 1 (para los botones - y +)
   const quitarDelCarrito = (id) => {
     setCarrito((prev) => {
       const existe = prev.find((item) => String(item.id) === String(id));
@@ -39,12 +40,10 @@ export default function App() {
     });
   };
 
-  // Elimina completamente el producto del carrito (para el botón X)
   const eliminarDelCarrito = (id) => {
     setCarrito((prev) => prev.filter((item) => String(item.id) !== String(id)));
   };
 
-  // Vacía todo el carrito
   const vaciarCarrito = () => {
     setCarrito([]);
   };
@@ -52,36 +51,41 @@ export default function App() {
   const totalUnidades = carrito.reduce((acc, item) => acc + item.cantidad, 0);
 
   return (
-    <Routes>
-      <Route path="/" element={<Layout carritoCount={totalUnidades} />}>
-        <Route index element={<Home />} />
-        
-        {/* Pasamos props a Productos */}
-        <Route 
-          path="productos" 
-          element={
-            <Productos 
-              carrito={carrito} 
-              agregarAlCarrito={agregarAlCarrito} 
-              quitarDelCarrito={quitarDelCarrito} 
-            />
-          } 
-        />
-        
-        <Route path="galeria" element={<Galeria />} />
-        
-        {/* Pasamos eliminarDelCarrito y vaciarCarrito a Contacto */}
-        <Route 
-          path="contacto" 
-          element={
-            <Contacto 
-              carrito={carrito} 
-              eliminarDelCarrito={eliminarDelCarrito}
-              vaciarCarrito={vaciarCarrito} 
-            />
-          } 
-        />
-      </Route>
-    </Routes>
+    <>
+      <Routes>
+        <Route path="/" element={<Layout carritoCount={totalUnidades} />}>
+          <Route index element={<Home />} />
+         
+          <Route
+            path="productos"
+            element={
+              <Productos
+                carrito={carrito}
+                agregarAlCarrito={agregarAlCarrito}
+                quitarDelCarrito={quitarDelCarrito}
+              />
+            }
+          />
+         
+          <Route path="galeria" element={<Galeria />} />
+          
+          {/* 👈 2. Agregamos la ruta de Calculadora */}
+          <Route path="calculadora" element={<Calculadora />} />
+         
+          <Route
+            path="contacto"
+            element={
+              <Contacto
+                carrito={carrito}
+                eliminarDelCarrito={eliminarDelCarrito}
+                vaciarCarrito={vaciarCarrito}
+              />
+            }
+          />
+        </Route>
+      </Routes>
+
+      <WhatsAppButton />
+    </>
   );
 }

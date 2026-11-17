@@ -1,70 +1,95 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import '../styles/Hero.css';
 
 export default function Hero() {
+  const navigate = useNavigate();
+
+  // Número de WhatsApp con código de país (Argentina: 549 + 1167391181)
+  const telefonoWhatsApp = "5491167391181";
+  const mensajePredeterminado = encodeURIComponent(
+    "¡Hola Hielos Carvan! Quisiera consultar precios y disponibilidad para hacer un pedido de bolsas de hielo."
+  );
+  const urlWhatsApp = `https://wa.me/${telefonoWhatsApp}?text=${mensajePredeterminado}`;
+
   return (
     <section className="hero-section">
-      <div className="hero-background-overlay"></div>
-      
-      <div className="container hero-container">
-        
-        <div className="hero-glass-card">
-          
+      <div className="hero-wrapper">
+       
+        {/* Bolsa lateral izquierda */}
+        <div className="hero-bag hero-bag--left">
+          <img src="/hielo 10kg.png" alt="Hielo Carvan 3kg" />
+        </div>
+
+        {/* Tarjeta Central Principal */}
+        <div className="hero-card">
+         
           <div className="hero-badge">
             <span className="badge-dot"></span>
-            FABRICACIÓN Y REPARTO DIRECTO · BUENOS AIRES
+            FABRICACIÓN Y REPARTO DIRECTO - ZONA SUR
           </div>
 
           <h1 className="hero-title">
-            Hielo en bolsas y barras <br />
-            <span className="hero-title-gradient">listo para tu comercio o evento</span>
+            HIELO EN CUBOS<br />
+            <span className="hero-title-cyan">LISTO PARA TU COMERCIO O EVENTO</span>
           </h1>
 
-          <p className="hero-subtitle">
-            Arrancamos este proyecto a principios de 2026 con un objetivo claro: fabricar hielo transparente, macizo y que no se pegue. Filtrado con ozono e iones de plata para que tus tragos y conservadoras rindan al máximo.
+          <p className="hero-description">
+            Ideal para eventos, comercios y hogares. Calidad constante, bolsas prácticas y listas para usar.
           </p>
 
           <div className="hero-actions">
-            <Link to="/productos" className="btn-hero-primary">
+            <button onClick={() => navigate('/productos')} className="btn-cyan">
               Ver bolsas y precios
-            </Link>
-            <Link to="/contacto" className="btn-hero-secondary">
+            </button>
+            <a
+              href={urlWhatsApp}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-dark-outline"
+            >
               Pedir por WhatsApp →
-            </Link>
+            </a>
           </div>
 
-          {/* Datos del servicio */}
-          <div className="hero-highlights">
-            <div className="highlight-item">
-              <span className="highlight-icon">🧊</span>
-              <div>
+          {/* Las 3 características rápidas dentro del Hero */}
+          <div className="hero-features">
+           
+            <div className="feature-item">
+              <span className="feature-emoji">🧊</span>
+              <div className="feature-info">
                 <strong>Cubos Sólidos</strong>
-                <small>Fusión lenta para coctelería</small>
+                <p>Fusión lenta para coctelería</p>
               </div>
             </div>
 
-            <div className="highlight-divider"></div>
+            <div className="feature-divider"></div>
 
-            <div className="highlight-item">
-              <span className="highlight-icon">🚚</span>
-              <div>
+            <div className="feature-item">
+              <span className="feature-emoji">🚚</span>
+              <div className="feature-info">
                 <strong>Entregas Programadas</strong>
-                <small>Bares, boliches y reuniones</small>
+                <p>Bares, boliches y reuniones</p>
               </div>
             </div>
 
-            <div className="highlight-divider"></div>
+            <div className="feature-divider"></div>
 
-            <div className="highlight-item">
-              <span className="highlight-icon">📍</span>
-              <div>
+            <div className="feature-item">
+              <span className="feature-emoji">📍</span>
+              <div className="feature-info">
                 <strong>Cobertura Local</strong>
-                <small>Envíos diarios coordinados</small>
+                <p>Envíos diarios coordinados</p>
               </div>
             </div>
+
           </div>
 
+        </div>
+
+        {/* Bolsa lateral derecha */}
+        <div className="hero-bag hero-bag--right">
+          <img src="/hielo 10kg.png" alt="Hielo Carvan 10kg" />
         </div>
 
       </div>

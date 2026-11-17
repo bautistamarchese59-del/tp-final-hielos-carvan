@@ -7,28 +7,47 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
   const [telefono, setTelefono] = useState('');
   const [frecuencia, setFrecuencia] = useState('Evento único');
   const [comentarios, setComentarios] = useState('');
-  
+ 
   const [cargando, setCargando] = useState(false);
   const [mensajeExito, setMensajeExito] = useState('');
 
-  const formatMoneda = (val) => {
-    return new Intl.NumberFormat('es-AR', {
-      style: 'currency',
-      currency: 'ARS',
-      minimumFractionDigits: 0
-    }).format(val);
-  };
+  // Cálculos de total de bolsas y kilos totales
+  const totalBolsas = carrito.reduce((acc, item) => acc + item.cantidad, 0);
+  
+  const totalKilos = carrito.reduce((acc, item) => {
+    const pesoUnitario = String(item.id).includes('10') ? 10 : 3;
+    return acc + (pesoUnitario * item.cantidad);
+  }, 0);
 
-  const totalDinero = carrito.reduce((acc, item) => acc + (item.precioNumerico * item.cantidad), 0);
+  // Función para limpiar los campos del formulario
+  const limpiarFormulario = () => {
+    setNombre('');
+    setEmail('');
+    setTelefono('');
+    setFrecuencia('Evento único');
+    setComentarios('');
+    console.log('🧹 Formulario limpiado por el usuario.');
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setCargando(true);
     setMensajeExito('');
 
+    // Feedback en consola
+    console.log('📤 Solicitud de presupuesto enviada:', {
+      nombre,
+      email: email || 'No especificado',
+      telefono,
+      frecuencia,
+      comentarios: comentarios || 'Sin comentarios',
+      totalBolsas,
+      totalKilos,
+      items: carrito
+    });
+
     const telefonoWhatsapp = '541167391181';
 
-    // payload adaptado para la api
     const pedidoPayload = {
       clienteNombre: nombre,
       clienteEmail: email || 'No especificado',
@@ -36,23 +55,24 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
       frecuencia: frecuencia,
       comentarios: comentarios || 'Sin comentarios',
       itemsResumen: carrito.map(item => `${item.cantidad}x ${item.nombre}`).join(', '),
-      total: totalDinero,
+      totalBolsas,
+      totalKilos,
       fecha: new Date().toLocaleDateString('es-AR')
     };
 
     const listaProductos = carrito.length > 0
-      ? carrito
-        .map((item) => `• *${item.cantidad}x* ${item.nombre} - Subtotal: ${formatMoneda(item.precioNumerico * item.cantidad)}`)
-        .join('\n')
+      ? carrito.map((item) => `• *${item.cantidad}x* ${item.nombre}`).join('\n')
       : '• Consulta general de productos';
 
     const mensaje = [
-      '*NUEVO PEDIDO - HIELOS CARVAN*',
+      '*SOLICITUD DE PRESUPUESTO - HIELOS CARVAN*',
       '',
       '*DETALLE DEL PEDIDO:*',
       listaProductos,
       '',
-      ...(carrito.length > 0 ? [`*TOTAL A PAGAR:* *${formatMoneda(totalDinero)}*`, ''] : []),
+      `*Total:* ${totalBolsas} ${totalBolsas === 1 ? 'bolsa' : 'bolsas'} (${totalKilos} kg en total)`,
+      '*Precio:* A coordinar',
+      '',
       `*Nombre:* ${nombre}`,
       ...(email ? [`*Email:* ${email}`] : []),
       `*Teléfono:* ${telefono}`,
@@ -79,20 +99,15 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
 
       const respuestaServidor = await res.json();
       console.log('✅ Registrado en MockAPI correctamente:', respuestaServidor);
-      setMensajeExito('✅ ¡Pedido registrado en la base de datos correctamente!');
+      setMensajeExito('✅ ¡Solicitud de presupuesto registrada correctamente!');
     } catch (error) {
       console.error('❌ Falló el guardado en MockAPI:', error);
-      setMensajeExito('⚠️ El pedido se enviará por WhatsApp (no se pudo conectar con la base de datos).');
+      setMensajeExito('⚠️ La solicitud se enviará por WhatsApp (no se pudo conectar con la base de datos).');
     } finally {
       setCargando(false);
     }
 
-    // Resetear campos y carrito
-    setNombre('');
-    setEmail('');
-    setTelefono('');
-    setComentarios('');
-    setFrecuencia('Evento único');
+    limpiarFormulario();
     vaciarCarrito();
   };
 
@@ -102,10 +117,10 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
 
         {/* Encabezado Principal */}
         <div className="contacto-header">
-          <span className="contacto-badge">FINALIZAR PEDIDO</span>
-          <h1 className="contacto-title">REALIZÁ TU PEDIDO EN LÍNEA</h1>
+          <span className="contacto-badge">SOLICITAR PRESUPUESTO</span>
+          <h1 className="contacto-title">ARMAMOS TU PRESUPUESTO A MEDIDA</h1>
           <p className="contacto-subtitle">
-            Completá los 3 pasos a continuación para enviar tu orden directamente por WhatsApp.
+            Completá los datos a continuación para enviar tu lista de pedido directamente por WhatsApp y coordinar el mejor precio por cantidad.
           </p>
         </div>
 
@@ -117,14 +132,14 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
         )}
 
         <form onSubmit={handleSubmit} className="checkout-sections-container">
-          
+         
           {/* PASO 1: REVISÁ TU PEDIDO */}
           <section className="checkout-step-card">
             <div className="step-card-header">
               <div className="step-number-badge">1</div>
               <div className="step-title-group">
                 <h2>REVISÁ TU PEDIDO</h2>
-                <p>Verificá los productos seleccionados y el total acumulado</p>
+                <p>Verificá los formatos de hielo seleccionados</p>
               </div>
             </div>
 
@@ -132,7 +147,9 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
               {carrito.length > 0 ? (
                 <div className="cart-review-content">
                   <div className="cart-review-actions">
-                    <span className="items-count-badge">🛒 {carrito.length} {carrito.length === 1 ? 'producto' : 'productos'}</span>
+                    <span className="items-count-badge">
+                      🛒 {totalBolsas} {totalBolsas === 1 ? 'bolsa' : 'bolsas'} en total ({totalKilos} kg en total)
+                    </span>
                     <button
                       type="button"
                       onClick={vaciarCarrito}
@@ -151,8 +168,8 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                         </div>
 
                         <div className="cart-item-action">
-                          <span className="item-subtotal">
-                            {formatMoneda(item.precioNumerico * item.cantidad)}
+                          <span className="item-subtotal" style={{ color: '#38bdf8', fontSize: '0.85rem' }}>
+                            Precio a coordinar
                           </span>
                           <button
                             type="button"
@@ -168,15 +185,15 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                   </ul>
 
                   <div className="cart-total-row">
-                    <span>TOTAL ESTIMADO:</span>
-                    <strong className="cart-total-price">{formatMoneda(totalDinero)}</strong>
+                    <span>MODALIDAD:</span>
+                    <strong className="cart-total-price" style={{ fontSize: '1.1rem', color: '#38bdf8' }}>Presupuesto a Medida</strong>
                   </div>
                 </div>
               ) : (
                 <div className="cart-empty-notice">
                   <span className="empty-icon">🧊</span>
-                  <p>Tu carrito está vacío en este momento.</p>
-                  <span className="empty-subtext">Podés enviar una consulta general o sumar productos desde el catálogo.</span>
+                  <p>Tu lista de pedido está vacía en este momento.</p>
+                  <span className="empty-subtext">Podés enviar una consulta general o sumar bolsas desde la sección Productos.</span>
                 </div>
               )}
             </div>
@@ -194,7 +211,7 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
 
             <div className="step-card-body">
               <div className="form-grid">
-                
+               
                 <div className="form-group">
                   <label htmlFor="nombre">Nombre y Apellido *</label>
                   <input
@@ -203,7 +220,10 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                     placeholder="Ej: Juan Pérez"
                     required
                     value={nombre}
-                    onChange={(e) => setNombre(e.target.value)}
+                    onChange={(e) => {
+                      setNombre(e.target.value);
+                      console.log('📝 Cambio en Nombre:', e.target.value);
+                    }}
                   />
                 </div>
 
@@ -215,7 +235,10 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                     placeholder="Ej: 1112345678"
                     required
                     value={telefono}
-                    onChange={(e) => setTelefono(e.target.value)}
+                    onChange={(e) => {
+                      setTelefono(e.target.value);
+                      console.log('📝 Cambio en Teléfono:', e.target.value);
+                    }}
                   />
                 </div>
 
@@ -226,7 +249,10 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                     type="email"
                     placeholder="ejemplo@correo.com"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={(e) => {
+                      setEmail(e.target.value);
+                      console.log('📝 Cambio en Email:', e.target.value);
+                    }}
                   />
                 </div>
 
@@ -247,7 +273,10 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                           name="frecuencia"
                           value={option.value}
                           checked={frecuencia === option.value}
-                          onChange={(e) => setFrecuencia(e.target.value)}
+                          onChange={(e) => {
+                            setFrecuencia(e.target.value);
+                            console.log('📝 Cambio en Frecuencia:', e.target.value);
+                          }}
                         />
                         <span>{option.label}</span>
                       </label>
@@ -262,11 +291,34 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
                     rows="3"
                     placeholder="Calle, altura, localidad, fecha/hora deseada o aclaraciones de entrega..."
                     value={comentarios}
-                    onChange={(e) => setComentarios(e.target.value)}
+                    onChange={(e) => {
+                      setComentarios(e.target.value);
+                      console.log('📝 Cambio en Comentarios:', e.target.value);
+                    }}
                   ></textarea>
                 </div>
 
               </div>
+
+              {/* Botón para limpiar campos manualmente */}
+              <div style={{ marginTop: '1.5rem', display: 'flex', justifyContent: 'flex-end' }}>
+                <button
+                  type="button"
+                  onClick={limpiarFormulario}
+                  style={{
+                    background: 'transparent',
+                    border: '1px solid rgba(255,255,255,0.2)',
+                    color: '#fff',
+                    padding: '0.5rem 1rem',
+                    borderRadius: '6px',
+                    cursor: 'pointer',
+                    fontSize: '0.9rem'
+                  }}
+                >
+                  🧹 Limpiar campos
+                </button>
+              </div>
+
             </div>
           </section>
 
@@ -275,23 +327,23 @@ export default function Contacto({ carrito = [], vaciarCarrito, eliminarDelCarri
             <div className="step-card-header">
               <div className="step-number-badge">3</div>
               <div className="step-title-group">
-                <h2>ENVÍO Y CONFIRMACIÓN POR WHATSAPP</h2>
-                <p>Al presionar el botón serás redirigido con tu pedido pre-cargado</p>
+                <h2>ENVÍO Y COTIZACIÓN POR WHATSAPP</h2>
+                <p>Al presionar el botón serás redirigido con tu lista de pedido</p>
               </div>
             </div>
 
             <div className="step-card-body">
               <div className="submit-summary-box">
                 <div className="submit-info-text">
-                  <span>Monto Total: <strong>{formatMoneda(totalDinero)}</strong></span>
-                  <small>✓ Registro automático en base de datos de Hielos Carvan</small>
+                  <span>Modalidad: <strong>Presupuesto Personalizado</strong></span>
+                  <small>✓ Envío directo de cotización por WhatsApp</small>
                 </div>
 
                 <button type="submit" className="btn-submit-whatsapp" disabled={cargando}>
                   <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99 0-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981z" />
                   </svg>
-                  <span>{cargando ? 'REGISTRANDO Y ENVIANDO...' : 'ENVIAR PEDIDO Y TOTAL A WHATSAPP'}</span>
+                  <span>{cargando ? 'ENVIANDO SOLICITUD...' : 'ENVIAR SOLICITUD DE PRESUPUESTO'}</span>
                 </button>
               </div>
             </div>
